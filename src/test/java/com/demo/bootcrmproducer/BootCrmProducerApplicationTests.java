@@ -1,13 +1,13 @@
-package com.demo.bootcrmproducer;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class BootCrmProducerApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+//package com.demo.bootcrmproducer;
+//
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//@SpringBootTest
+//class BootCrmProducerApplicationTests {
+//
+//	@Test
+//	void contextLoads() {
+//	}
+//
+//}

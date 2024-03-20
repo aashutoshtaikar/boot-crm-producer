@@ -1,12 +1,11 @@
 package com.demo.dao;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
 
 import com.demo.domain.Customer;
 
-public interface CustomerRepo extends JpaRepository<Customer, Integer> {
-	Optional<List<Customer>> findByName(String name);
+import reactor.core.publisher.Flux;
+
+public interface CustomerRepo extends R2dbcRepository<Customer, Integer> {
+	Flux<Customer> findByName(String name);
 }

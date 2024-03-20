@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.dao.CustomerRepo;
 import com.demo.domain.Customer;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 @RestController
 @RequestMapping("/customers")
 public class CustomerResource {
@@ -27,23 +30,21 @@ public class CustomerResource {
 	private CustomerRepo customerRepo;
 	
 	@GetMapping
-	public List<Customer> getAllCustomers(){
+	public Flux<Customer> getAllCustomers(){
 		return customerRepo.findAll();
 	}
 	
 	@GetMapping("/{id}")
-	public Customer getCustomer(@PathVariable Integer id) {
-		Optional<Customer> customerOptional = customerRepo.findById(id);
-		if (!customerOptional.isPresent()) {
-			throw new RuntimeException("customer not found with id " + id);
-		}
-		return customerOptional.get();
+	public Mono<Customer> getCustomer(@PathVariable Integer id) {
+		Mono<Customer> customerOptional = customerRepo.findById(id);
+
+		return customerOptional;
 	}
 	
 	@PostMapping
-	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer){
-		Customer customerCreated = customerRepo.save(customer);
-		return new ResponseEntity<Customer>(customerCreated, HttpStatus.CREATED);
+	public Mono<Customer> addCustomer(@RequestBody Customer customer){
+		Mono<Customer> customerCreated = customerRepo.save(customer);
+		return customerCreated;
 	}
 	
 	@DeleteMapping("/{id}")
@@ -52,12 +53,10 @@ public class CustomerResource {
 	}
 	
 	@GetMapping("searchName/{name}")
-	public List<Customer> getCustomer(@PathVariable String name) throws Exception {
-		Optional<List<Customer>> customerOptional = customerRepo.findByName(name);
-		if (!customerOptional.isPresent()) {
-			throw new RuntimeException("customer not found with name " + name);
-		}
-		return customerOptional.get();
+	public Flux<Customer> getCustomer(@PathVariable String name) throws Exception {
+		Flux<Customer> customerOptional = customerRepo.findByName(name);
+
+		return customerOptional;
 	}
 	
 	@ExceptionHandler(RuntimeException.class)
